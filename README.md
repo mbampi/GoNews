@@ -14,6 +14,6 @@ GOnews is a simple backend web app using golang and mysql.
 
 ## Using
 
-```go run main.go``` 
+```go run src/main.go``` 
 
 - access: http://localhost:8081/

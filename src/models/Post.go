@@ -8,8 +8,7 @@ type Post struct {
 	Author  *Author `json:"author"`
 }
 
-// Author struct (cpf as primary key)
-type Author struct {
-	CPF  int    `json:"cpf"`
-	Name string `json:"name"`
+func getAll() {
+	//con.Exec("INSERT INTO post VALUES(2, 'Post from GO', 'Post made from GOlang');")
+
 }
