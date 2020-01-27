@@ -7,8 +7,3 @@ type Post struct {
 	Content string  `json:"content"`
 	Author  *Author `json:"author"`
 }
-
-func getAll() {
-	//con.Exec("INSERT INTO post VALUES(2, 'Post from GO', 'Post made from GOlang');")
-
-}

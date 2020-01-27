@@ -19,11 +19,6 @@ type Author = models.Author
 var posts []Post
 
 func main() {
-	// posts = []Post{
-	// 	Post{ID: 1, Title: "My first post", Content: "this is my first post", Author: &Author{CPF: 123, Name: "Matheus O Grande"}},
-	// 	Post{ID: 2, Title: "My second post", Content: "this is my second post", Author: &Author{CPF: 456, Name: "Bob Jorge"}},
-	// }
-
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
