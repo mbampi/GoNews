@@ -8,8 +8,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"gonews/src/models"
+
 	"github.com/gorilla/mux"
-	"github.com/mbampi/gonews/src/models"
 )
 
 func (s *Server) getAllPosts(w http.ResponseWriter, r *http.Request) {

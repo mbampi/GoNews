@@ -4,10 +4,11 @@ import (
 	"log"
 	"os"
 
+	"gonews/src/controllers"
+	"gonews/src/models"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
-	"github.com/mbampi/gonews/src/controllers"
-	"github.com/mbampi/gonews/src/models"
 )
 
 // Post model
