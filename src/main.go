@@ -5,19 +5,9 @@ import (
 	"os"
 
 	"gonews/src/controllers"
-	"gonews/src/models"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 )
-
-// Post model
-type Post = models.Post
-
-// Author (fk of Post)
-type Author = models.Author
-
-var posts []Post
 
 func main() {
 	err := godotenv.Load()

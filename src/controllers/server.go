@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -9,42 +10,35 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// Server contains Database and Router
 type Server struct {
 	DB     *sql.DB
 	Router *mux.Router
 }
 
+// Initialize the server
 func (s *Server) Initialize(dbUser, dbPassword, dbName string) {
 	var err error
-	s.DB, err = connectDB(dbUser, dbPassword, dbName)
+	s.DB, err = sql.Open("mysql", dbUser+":"+dbPassword+"@/"+dbName)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	s.Router = createRouter()
+	s.Router = mux.NewRouter().StrictSlash(true)
 	s.initializeRouter()
 }
 
+// Run listening to port defined
 func (s *Server) Run() {
 	log.Fatal(http.ListenAndServe(":8081", s.Router))
-}
-
-func connectDB(dbUser, dbPassword, dbName string) (*sql.DB, error) {
-	db, err := sql.Open("mysql", dbUser+":"+dbPassword+"@/"+dbName)
-
-	return db, err
-}
-
-func createRouter() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-	return router
+	fmt.Println("Running")
 }
 
 func (s *Server) initializeRouter() {
 	s.Router.HandleFunc("/", s.homePage)
 	s.Router.HandleFunc("/posts", s.getAllPosts).Methods("GET")
-	s.Router.HandleFunc("/post/{id}", s.getPost).Methods("GET")
-	s.Router.HandleFunc("/post", s.createPost).Methods("POST")
-	s.Router.HandleFunc("/post/{id}", s.updatePost).Methods("PUT")
-	s.Router.HandleFunc("/post/{id}", s.deletePost).Methods("DELETE")
+	s.Router.HandleFunc("/posts/{id}", s.getPost).Methods("GET")
+	s.Router.HandleFunc("/posts", s.createPost).Methods("POST")
+	s.Router.HandleFunc("/posts/{id}", s.updatePost).Methods("PUT")
+	s.Router.HandleFunc("/posts/{id}", s.deletePost).Methods("DELETE")
 }
