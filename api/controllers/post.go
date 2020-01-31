@@ -53,7 +53,11 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	var post models.Post
 	json.Unmarshal(reqBody, &post)
 
-	// TODO: validate fields
+	err := post.Validate()
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
 
 	result := DB.Create(&post)
 	if result.Error != nil {
@@ -78,7 +82,7 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	// TODO: validate fields
 
 	post.ID = uint64(id)
-	result := DB.Model(&post).Update("Title", post.Title)
+	result := db.Save(&post)
 	if result.Error != nil {
 		log.Println(result.Error)
 	}

@@ -13,4 +13,16 @@ type Post struct {
 	UpdatedAt time.Time `gorm:"default:current_timestamp()" json:"updated_at"`
 }
 
-// TODO: Validate function
+// Validate validates the inputs
+func (p *Post) Validate() error {
+	if p.Title == "" {
+		return errors.New("Title is required")
+	}
+	if p.Content == "" {
+		return errors.New("Content is required")
+	}
+	if p.AuthorID < 0 {
+		return errors.New("Author is required")
+	}
+	return nil
+}

@@ -25,3 +25,17 @@ func (a *Author) BeforeSave() error {
 	a.Password = string(hashedPassword)
 	return nil
 }
+
+// Validate validates the inputs
+func (a *Author) Validate() error {
+	if a.Name == "" {
+		return errors.New("Name is required")
+	}
+	if a.Email == "" {
+		return errors.New("Email is required")
+	}
+	if a.Password == "" {
+		return errors.New("Password is required")
+	}
+	return nil
+}
