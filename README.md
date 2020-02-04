@@ -15,7 +15,7 @@ Authors and Posts.
 
 ## Using
 
-```go run src/main.go``` 
+```go run api/main.go``` 
 
 - access: http://localhost:8081/
 

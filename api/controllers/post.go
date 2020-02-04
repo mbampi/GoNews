@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"gonews/api/models"
+	"gonews/api/responses"
 
 	"github.com/gorilla/mux"
 )
@@ -20,12 +21,11 @@ func GetAllPosts(w http.ResponseWriter, r *http.Request) {
 	var posts []models.Post
 	result := DB.Preload("Author").Find(&posts)
 	if result.Error != nil {
-		log.Println(result.Error)
+		responses.RespondWithError(w, http.StatusBadRequest, result.Error)
+		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(posts)
-	return
+	responses.RespondWithJSON(w, http.StatusOK, posts)
 }
 
 // GetPost handles to return the post referent to the id
@@ -37,12 +37,11 @@ func GetPost(w http.ResponseWriter, r *http.Request) {
 	var post models.Post
 	result := DB.Preload("Author").First(&post, id)
 	if result.Error != nil {
-		log.Println(result.Error)
+		responses.RespondWithError(w, http.StatusBadRequest, result.Error)
+		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(post)
-	return
+	responses.RespondWithJSON(w, http.StatusOK, post)
 }
 
 // CreatePost adds to database a new post
@@ -55,17 +54,18 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	err := post.Validate()
 	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		responses.RespondWithError(w, http.StatusUnprocessableEntity, err)
 		return
 	}
 
 	result := DB.Create(&post)
 	if result.Error != nil {
 		log.Println(result.Error)
+		responses.RespondWithError(w, http.StatusBadRequest, result.Error)
+		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(post)
+	responses.RespondWithJSON(w, http.StatusOK, post)
 }
 
 // UpdatePost updates post
@@ -79,12 +79,17 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	var post models.Post
 	json.Unmarshal(reqBody, &post)
 
-	// TODO: validate fields
+	err := post.Validate()
+	if (err != nil){
+		responses.RespondWithError(w, http.StatusBadRequest, err)
+		return
+	}
 
 	post.ID = uint64(id)
-	result := db.Save(&post)
+	result := DB.Save(&post)
 	if result.Error != nil {
-		log.Println(result.Error)
+		responses.RespondWithError(w, http.StatusBadRequest, result.Error)
+		return
 	}
 }
 
@@ -99,7 +104,8 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 		post.ID = uint64(id)
 		result := DB.Delete(&post)
 		if result.Error != nil {
-			log.Println(result.Error)
+			responses.RespondWithError(w, http.StatusBadRequest, result.Error)
+			return
 		}
 	}
 

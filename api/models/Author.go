@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"gonews/api/security"
 	"time"
 )

@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"time"
+	"errors"
+)
 
 // Post struct
 type Post struct {
