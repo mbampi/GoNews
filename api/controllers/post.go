@@ -108,18 +108,17 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(post)
+	responses.RespondWithJSON(w, http.StatusOK, "OK")
 }
 
 // HomePage prints an welcome message
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: homePage")
 
-	fmt.Fprintf(w, "-- Welcome to my first Go API --")
-	fmt.Fprintf(w, "\n Matheus D Bampi ")
+	// fmt.Fprintf(w, "<h1 align='center'>-- Welcome to GoNews --</h1>")
+	// fmt.Fprintf(w, "\n <p align='center'> Matheus D Bampi </p>")
+	htmlResponse := `<h1 align='center'>-- Welcome to GoNews --</h1>
+					<p align='center'> Matheus D Bampi </p>`
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode("OK")
+	responses.RespondWithHTML(w, htmlResponse)
 }

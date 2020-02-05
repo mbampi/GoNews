@@ -42,6 +42,12 @@ func main() {
 	router.HandleFunc("/posts/{id}", controllers.UpdatePost).Methods("PUT")
 	router.HandleFunc("/posts/{id}", controllers.DeletePost).Methods("DELETE")
 
+	router.HandleFunc("/authors", controllers.GetAllAuthors).Methods("GET")
+	router.HandleFunc("/authors/{id}", controllers.GetAuthor).Methods("GET")
+	router.HandleFunc("/authors", controllers.CreateAuthor).Methods("POST")
+	router.HandleFunc("/authors/{id}", controllers.UpdateAuthor).Methods("PUT")
+	router.HandleFunc("/authors/{id}", controllers.DeleteAuthor).Methods("DELETE")
+
 	fmt.Println("Running")
 	log.Fatal(http.ListenAndServe(":8081", router))
 }

@@ -21,8 +21,5 @@ Authors and Posts.
 
 ## TODO
 
-- JWT auth
-- Validate fields
-- Author endpoints
 - Login
-- Handle errors
+- JWT auth

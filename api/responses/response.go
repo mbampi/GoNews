@@ -3,6 +3,7 @@ package responses
 import (
 	"encoding/json"
 	"log"
+	"fmt"
 	"net/http"
 )
 
@@ -18,4 +19,10 @@ func RespondWithError(w http.ResponseWriter, status int, err error) {
 	w.Header().Set("Content-Type", "application/json")
 	http.Error(w, err.Error(), status)
 	log.Printf(err.Error())
+}
+
+// RespondWithHTML sends a HTML response
+func RespondWithHTML(w http.ResponseWriter, htmlText string) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	fmt.Fprint(w, htmlText)
 }
