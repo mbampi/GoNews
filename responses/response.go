@@ -2,8 +2,8 @@ package responses
 
 import (
 	"encoding/json"
-	"log"
 	"fmt"
+	"log"
 	"net/http"
 )
 

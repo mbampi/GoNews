@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+    
+    database:
+        image: gonews-db
+        ports:
+            - "3306:3036"
+        environment:
+            MYSQL_ROOT_PASSWORD: pass_gonews_db
+            MYSQL_DATABASE: gonews_db
+            MYSQL_USER: user_gonews_db
+            MYSQL_PASSWORD: pass_gonews_db
+        healthcheck:
+          test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+
+    backend:
+        image: gonews-backend
+        depends_on:
+          database:
+            condition: service_healthy
+        ports:
+            - "8080:8081"
+        environment:
+          DB_USER: user_gonews_db
+          DB_PASSWORD: pass_gonews_db
+          DB_NAME: gonews_db

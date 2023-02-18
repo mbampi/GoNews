@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"gonews/api/models"
-	"gonews/api/responses"
+	"gonews/models"
+	"gonews/responses"
 
 	"github.com/gorilla/mux"
 )
@@ -80,7 +80,7 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(reqBody, &post)
 
 	err := post.Validate()
-	if (err != nil){
+	if err != nil {
 		responses.RespondWithError(w, http.StatusBadRequest, err)
 		return
 	}
@@ -115,8 +115,6 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: homePage")
 
-	// fmt.Fprintf(w, "<h1 align='center'>-- Welcome to GoNews --</h1>")
-	// fmt.Fprintf(w, "\n <p align='center'> Matheus D Bampi </p>")
 	htmlResponse := `<h1 align='center'>-- Welcome to GoNews --</h1>
 					<p align='center'> Matheus D Bampi </p>`
 

@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"gonews/api/models"
-	"gonews/api/responses"
+	"gonews/models"
+	"gonews/responses"
 
 	"github.com/gorilla/mux"
 )
@@ -80,7 +80,7 @@ func UpdateAuthor(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(reqBody, &author)
 
 	err := author.Validate()
-	if (err != nil){
+	if err != nil {
 		responses.RespondWithError(w, http.StatusBadRequest, err)
 		return
 	}

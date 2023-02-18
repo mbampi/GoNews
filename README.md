@@ -23,3 +23,7 @@ Authors and Posts.
 
 - Login
 - JWT auth
+
+## Running on Docker
+
+docker run -p 8080:8081 -it my-go-app
